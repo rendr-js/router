@@ -1,0 +1,16 @@
+{
+  "name": "@rendrjs/router",
+  "version": "0.0.1",
+  "description": "Official router for Rendrjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "pub": "npm version patch && npx tsc && npm publish"
+  },
+  "peerDependencies": {
+    "@rendrjs/core": "0.x"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  }
+}
