@@ -77,7 +77,7 @@ export let Router = ({ routes, outlet = 'div', className }: RouterProps) => {
 };
 
 interface Params {
-  [key: string]: string
+  [key: string]: string | undefined
 }
 
 export let useParams = <T extends Params>(): T => {
