@@ -48,8 +48,10 @@ let match = (routes: CompiledRoute[]): CompiledRoute | undefined => {
 };
 
 export let navigate = (path: string) => {
-  history.pushState({}, '', path);
-  triggerNewPathEvent();
+  if (location.pathname !== path) {
+    history.pushState({}, '', path);
+    triggerNewPathEvent();
+  }
 };
 
 export let triggerNewPathEvent = () => dispatchEvent(new PopStateEvent('popstate'));
