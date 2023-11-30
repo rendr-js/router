@@ -2,12 +2,12 @@ import { ClickEvent, Slot, rendr, useAtomValue, useCallback } from '@rendrjs/cor
 import { routeAtom, triggerNewPathEvent } from './Router';
 
 export interface LinkProps {
-    className?: string
+    class?: string
     to: string
     slot: Slot
 }
 
-export let Link = ({ to, className, slot }: LinkProps) => {
+export let Link = ({ to, class: className, slot }: LinkProps) => {
   useAtomValue(routeAtom);
 
   let onclick = useCallback((e: ClickEvent<HTMLAnchorElement>) => {
@@ -21,7 +21,7 @@ export let Link = ({ to, className, slot }: LinkProps) => {
   }
 
   return rendr('a', {
-    className,
+    class: className,
     href: to,
     slot,
     onclick,

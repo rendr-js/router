@@ -60,11 +60,11 @@ export let routeAtom = createAtom<CompiledRoute | undefined>(undefined);
 
 export interface RouterProps {
   routes: Route[]
-  className?: string
+  class?: string
   outlet?: keyof HTMLElementTagNameMap
 }
 
-export let Router = ({ routes, outlet = 'div', className }: RouterProps) => {
+export let Router = ({ routes, outlet = 'div', class: className }: RouterProps) => {
   let [route, setRoute] = useAtom(routeAtom);
   let compiledRoutes = useMemo(() => routes.map(compileRoute), [routes]);
 
@@ -75,7 +75,7 @@ export let Router = ({ routes, outlet = 'div', className }: RouterProps) => {
     return () => removeEventListener('popstate', listener);
   }, [compiledRoutes]);
 
-  return rendr(outlet, { slot: route?.slot, className });
+  return rendr(outlet, { slot: route?.slot, class: className });
 };
 
 interface Params {
