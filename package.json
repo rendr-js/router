@@ -1,6 +1,6 @@
 {
   "name": "@rendrjs/router",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Official router for Rendrjs",
   "main": "dist/index.js",
   "scripts": {
