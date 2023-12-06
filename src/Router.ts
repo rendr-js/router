@@ -6,7 +6,10 @@ import {
   createAtom,
   useAtom,
   useAtomValue,
+  div,
+  Elem,
 } from '@rendrjs/core';
+import { HTMLElementAttributes, RendrAttributes, SVGElementAttributes } from '@rendrjs/core/dist/elem';
 
 interface Route {
   path: string
@@ -61,10 +64,10 @@ export let routeAtom = createAtom<CompiledRoute | undefined>(undefined);
 export interface RouterProps {
   routes: Route[]
   class?: string
-  outlet?: keyof HTMLElementTagNameMap
+  outlet?: <Tag extends keyof HTMLElementTagNameMap | keyof SVGElementTagNameMap, Attrs extends RendrAttributes = Tag extends keyof HTMLElementTagNameMap ? HTMLElementAttributes<Tag> : Tag extends keyof SVGElementTagNameMap ? SVGElementAttributes<Tag> : never>(attrs?: Attrs) => Elem
 }
 
-export let Router = ({ routes, outlet = 'div', class: className }: RouterProps) => {
+export let Router = ({ routes, outlet = div, class: className }: RouterProps) => {
   let [route, setRoute] = useAtom(routeAtom);
   let compiledRoutes = useMemo(() => routes.map(compileRoute), [routes]);
 
@@ -75,7 +78,7 @@ export let Router = ({ routes, outlet = 'div', class: className }: RouterProps) 
     return () => removeEventListener('popstate', listener);
   }, [compiledRoutes]);
 
-  return rendr(outlet, { slot: route?.slot, class: className });
+  return outlet({ slot: route?.slot, class: className });
 };
 
 interface Params {

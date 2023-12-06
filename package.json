@@ -7,7 +7,7 @@
     "pub": "npm version patch && npx tsc && npm publish"
   },
   "peerDependencies": {
-    "@rendrjs/core": "0.x"
+    "@rendrjs/core": "^0.1.223"
   },
   "license": "ISC",
   "devDependencies": {
