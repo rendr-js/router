@@ -16,10 +16,6 @@ export let Link = ({ to, class: className, slot }: LinkProps) => {
     triggerNewPathEvent();
   }, [to]);
 
-  if (to === location.pathname) {
-    className += ' active';
-  }
-
   return a({
     class: className,
     href: to,
