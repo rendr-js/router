@@ -8,6 +8,7 @@ import {
   useAtomValue,
   div,
   Elem,
+  useAtomSetter,
 } from '@rendrjs/core';
 import { HTMLElementAttributes, RendrAttributes, SVGElementAttributes } from '@rendrjs/core/dist/elem';
 
@@ -60,6 +61,7 @@ export let navigate = (path: string) => {
 export let triggerNewPathEvent = () => dispatchEvent(new PopStateEvent('popstate'));
 
 export let routeAtom = createAtom<CompiledRoute | undefined>(undefined);
+let pathnameAtom = createAtom<string>(location.pathname);
 
 export interface RouterProps {
   routes: Route[]
@@ -69,10 +71,14 @@ export interface RouterProps {
 
 export let Router = ({ routes, outlet = div, class: className }: RouterProps) => {
   let [route, setRoute] = useAtom(routeAtom);
+  let setPathname = useAtomSetter(pathnameAtom);
   let compiledRoutes = useMemo(() => routes.map(compileRoute), [routes]);
 
   useEffect(() => {
-    let listener = () => setRoute(match(compiledRoutes));
+    let listener = () => {
+      setRoute(match(compiledRoutes));
+      setPathname(location.pathname);
+    };
     listener();
     addEventListener('popstate', listener);
     return () => removeEventListener('popstate', listener);
@@ -84,6 +90,8 @@ export let Router = ({ routes, outlet = div, class: className }: RouterProps) =>
 interface Params {
   [key: string]: string | undefined
 }
+
+export let usePathname = () => useAtomValue(pathnameAtom);
 
 export let useParams = <T extends Params>(): T => {
   let route = useAtomValue(routeAtom);
