@@ -1,4 +1,4 @@
-import { ClickEvent, Slot, a, useAtomValue, useCallback } from '@rendrjs/core';
+import { ClickEvent, Slot, element, useAtomValue, useCallback } from '@rendrjs/core';
 import { routeAtom, triggerNewPathEvent } from './Router';
 
 export interface LinkProps {
@@ -16,7 +16,7 @@ export let Link = ({ to, class: className, slot }: LinkProps) => {
     triggerNewPathEvent();
   }, [to]);
 
-  return a({
+  return element('a', {
     class: className,
     href: to,
     slot,
